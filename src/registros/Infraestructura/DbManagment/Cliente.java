@@ -21,16 +21,15 @@ public class Cliente {
             conexion.setQuerySQL(conexion.conexionDB().createStatement());
             boolean execute = conexion.getQuerySQL().execute("INSERT INTO clientes(" +
                     "idcliente, " +
-                    "idpersona, " +
+                    "idpersona," +
                     "fechaingreso, " +
                     "calificacion, " +
                     "estado) " +
                     "values('" +
                     cliente.idcliente + "', '" +
-                    cliente.idpersona + "', '" +
                     cliente.fechaingreso + "', '" +
                     cliente.calificacion + "', '" +
-                    cliente.estado +"')");
+                    cliente.estado + "')");
             conexion.conexionDB().close();
             return "El Cliente " + cliente.idcliente + " fue registrado correctamente.";
         } catch (SQLException e) {
@@ -46,8 +45,9 @@ public class Cliente {
                 
                     "calificacion = '" + cliente.calificacion + "'," +
                     "estado = '" + cliente.estado + "'," +
+                    "idpersona = '" + cliente.idpersona + "'" +
       
-                            "' Where idcliente = " + cliente.idcliente);
+                            " WHERE idcliente = " + cliente.idcliente);
             conexion.conexionDB().close();
             return "Los datos del Cliente " + cliente.idcliente + " fueron modificados correctamente.";
         } catch (SQLException e) {
@@ -75,5 +75,21 @@ public class Cliente {
         }
         return null;
     }
+    
+    public String eliminarCliente(int idCliente) {
+    try {
+        conexion.setQuerySQL(conexion.conexionDB().createStatement());
+        boolean execute = conexion.getQuerySQL().execute("DELETE FROM clientes WHERE idcliente = " + idCliente);
+        conexion.conexionDB().close();
+
+        if (execute) {
+            return "Cliente eliminado correctamente.";
+        } else {
+            return "No se pudo eliminar el cliente. Verifica que el ID sea válido.";
+        }
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+}
     
 }

@@ -57,8 +57,8 @@ public class Personas {
                     "direccion = '" + persona.direccion + "'," +
                     "celular = '" + persona.celular + "'," +
                     "email = '" + persona.email + "'," +
-                    "estado = '" + persona.estado + "'," +        
-                            "' Where idpersona = " + persona.idpersona);
+                    "estado = '" + persona.estado + "'" +        
+                            " Where idpersona = " + persona.idpersona);
             conexion.conexionDB().close();
             return "Los datos de la persona con nombre: " + persona.nombre + " fueron modificados correctamente.";
         } catch (SQLException e) {
@@ -91,4 +91,21 @@ public class Personas {
         return null;
     }
     
+    public String eliminarPersona(int id) {
+    try {
+        conexion.setQuerySQL(conexion.conexionDB().createStatement());
+        boolean execute = conexion.getQuerySQL().execute("DELETE FROM personas WHERE idpersona = " + id);
+        conexion.conexionDB().close();
+
+        if (execute) {
+            return "La persona con ID: " + id + " fue eliminada correctamente.";
+        } else {
+            return "No se pudo eliminar la persona con ID: " + id;
+        }
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+}
+
+   
 }

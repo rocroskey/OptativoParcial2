@@ -22,7 +22,7 @@ public class Ciudad {
                     "values('" +
                     ciudad.ciudad+ "', '" +
                     ciudad.Departamento + "', '" +
-                    ciudad.Postal_Code + "')");
+                    ciudad.PostalCode + "')");
             conexion.conexionDB().close();
             return "La ciudad " + ciudad.ciudad + " fue registrada correctamente.";
         } catch (SQLException e) {
@@ -38,7 +38,7 @@ public class Ciudad {
                 
                     "ciudad = '" + ciudad.ciudad + "'," +
                     "departamento = '" + ciudad.Departamento + "'," +
-                    "postal = '" + ciudad.Postal_Code + "'" +
+                    "postal = '" + ciudad.PostalCode + "'" +
                             " Where id = " + id);
             conexion.conexionDB().close();
             return "Los datos de la ciudad " + ciudad.ciudad + " fueron modificados correctamente.";
@@ -56,7 +56,7 @@ public class Ciudad {
                 
                 ciudad.setCiudad(conexion.getResultadoQuery().getString("ciudad"));
                 ciudad.setDepartamento(conexion.getResultadoQuery().getString("departamento"));
-                ciudad.setPostal_Code(conexion.getResultadoQuery().getInt("postal"));
+                ciudad.setPostalCode(conexion.getResultadoQuery().getInt("postal"));
 
                 return ciudad;
             }
@@ -66,4 +66,21 @@ public class Ciudad {
         return null;
     }
     
+    
+    public String eliminarCiudad(int id) {
+    try {
+        conexion.setQuerySQL(conexion.conexionDB().createStatement());
+        int rowCount = conexion.getQuerySQL().executeUpdate("DELETE FROM ciudad WHERE id = " + id);
+        conexion.conexionDB().close();
+
+        if (rowCount > 0) {
+            return "Ciudad eliminada correctamente.";
+        } else {
+            return "No se encontró la ciudad con ID: " + id;
+        }
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+}
+
 }

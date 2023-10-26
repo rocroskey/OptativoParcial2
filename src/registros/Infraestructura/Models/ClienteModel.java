@@ -51,6 +51,6 @@ public class ClienteModel {
     public void setEstado(String Estado) {
         this.estado = Estado;
     }
-    
+
     
 }

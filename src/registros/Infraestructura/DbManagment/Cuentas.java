@@ -55,6 +55,7 @@ public class Cuentas {
             boolean execute = conexion.getQuerySQL().execute("UPDATE cuentas SET " +
           
                     "nrocuenta = '" + cuenta.nrocuenta + "'," +
+                    "idclientes = '" + cuenta.idclientes + "'," +
                     "fechaalta = '" + cuenta.fechaalta + "'," +
                     "tipocuenta = '" + cuenta.tipocuenta + "'," +
                     "estado = '" + cuenta.estado + "'," +
@@ -62,8 +63,8 @@ public class Cuentas {
                     "nrocontrato = '" + cuenta.nrocontrato + "'," +
                     "costomantenimiento = '" + cuenta.costomantenimiento + "'," +
                     "promedioacreditacion = '" + cuenta.promedioacreditacion + "'," +
-                    "moneda = '" + cuenta.moneda + "'," +       
-                            "' Where idcuenta = " + cuenta.idcuenta);
+                    "moneda = '" + cuenta.moneda + "'" +       
+                            " Where idcuenta = " + cuenta.idcuenta);
             conexion.conexionDB().close();
             return "Los datos de la cuenta Numero: " + cuenta.nrocuenta + " fueron modificados correctamente.";
         } catch (SQLException e) {
@@ -98,4 +99,14 @@ public class Cuentas {
         return null;
     }
     
+    
+    public void eliminarCuenta(int id) {
+        try {
+            conexion.setQuerySQL(conexion.conexionDB().createStatement());
+            boolean execute = conexion.getQuerySQL().execute("DELETE FROM cuentas WHERE idcuenta = " + id);
+            conexion.conexionDB().close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
