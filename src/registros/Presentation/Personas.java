@@ -1,91 +1,78 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package registros.Presentation;
 
 import javax.swing.JOptionPane;
-import registros.Infraestructura.Models.PersonaModel;
+import registros.Infraestructura.Models.PersonaModelo;
 import registros.Services.ServicioPersonas;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import registros.Infraestructura.Models.CiudadModel;
-
 
 
 public class Personas extends javax.swing.JFrame {
-
     
     private ServicioPersonas serviciopersona;
-    private PersonaModel personamodel;
-    
-    
-    
     
     public Personas() {
         initComponents();
         setLocationRelativeTo(null);
-        
-        
+
         serviciopersona = new ServicioPersonas("postgres", "091100","localhost","5432","Registros");
     }
     
+    private void cargardatos(PersonaModelo modelo){
+        etiqidciudad.setText(String.valueOf(modelo.getIdCiudad()));
+        etiqnombre.setText(modelo.getNombre());
+        etiqapellido.setText(modelo.getApellido());
+        cbtipodocumento.setSelectedItem(modelo.getTipoDocumento());
+        etiqnrodocumento.setText(modelo.getNumeroDocumento());
+        etiqdireccion.setText(modelo.getDireccion());
+        etiqemail.setText(modelo.getEmail());
+        etiqcelular.setText(modelo.getCelular());
+        cbestado.setSelectedItem(modelo.getEstado());
+    }
+    
+    private void consultarPersonaPorId(String id) {
+        cargardatos(serviciopersona.consultarPersonaPorId(Integer.parseInt(id))); 
+    }
+    
     private void guardarPersona() {
-    PersonaModel persona = new PersonaModel();
-    persona.setNombre(etiqnombre.getText());  
-    persona.setApellido(etiqapellido.getText());  
-    persona.setDireccion(etiqdireccion.getText());  
-    persona.setEmail(etiqemail.getText());  
-    persona.setEstado(cbestado.getSelectedItem().toString());  
-    persona.setIdCiudad(Integer.parseInt(etiqidciudad.getText()));  
-    persona.setIdpersona(Integer.parseInt(etiqidpersona.getText())); 
-    persona.setNumeroDocumento(etiqnrodocumento.getText()); 
-    persona.setTipoDocumento((String) cbtipodocumento.getSelectedItem()); 
-    persona.setCelular(etiqcelular.getText()); 
+        PersonaModelo persona = new PersonaModelo();
+        persona.setNombre(etiqnombre.getText());  
+        persona.setApellido(etiqapellido.getText());  
+        persona.setDireccion(etiqdireccion.getText());  
+        persona.setEmail(etiqemail.getText());  
+        persona.setEstado(cbestado.getSelectedItem().toString());  
+        persona.setIdCiudad(Integer.parseInt(etiqidciudad.getText()));  
+        persona.setIdpersona(Integer.parseInt(etiqidpersona.getText())); 
+        persona.setNumeroDocumento(etiqnrodocumento.getText()); 
+        persona.setTipoDocumento((String) cbtipodocumento.getSelectedItem()); 
+        persona.setCelular(etiqcelular.getText()); 
 
-    String resultado = serviciopersona.registrarPersona(persona);
-    JOptionPane.showMessageDialog(this, resultado);
+        String resultado = serviciopersona.registrarPersona(persona);
+        JOptionPane.showMessageDialog(this, resultado);
+        
+        
 
     LimpiarCampos();
-
-}
-    
+    }
     
     private void actualizarPersona(){
-    PersonaModel persona = new PersonaModel();
-    persona.setNombre(etiqnombre.getText());  
-    persona.setApellido(etiqapellido.getText());  
-    persona.setDireccion(etiqdireccion.getText());  
-    persona.setEmail(etiqemail.getText());  
-    persona.setEstado(cbestado.getSelectedItem().toString()); 
-    persona.setIdCiudad(Integer.parseInt(etiqidciudad.getText()));  
-    persona.setIdpersona(Integer.parseInt(etiqidpersona.getText())); 
-    persona.setNumeroDocumento(etiqnrodocumento.getText()); 
-    persona.setTipoDocumento((String) cbtipodocumento.getSelectedItem()); 
-    persona.setCelular(etiqcelular.getText()); 
+        PersonaModelo persona = new PersonaModelo();
+        persona.setNombre(etiqnombre.getText());  
+        persona.setApellido(etiqapellido.getText());  
+        persona.setDireccion(etiqdireccion.getText());  
+        persona.setEmail(etiqemail.getText());  
+        persona.setEstado(cbestado.getSelectedItem().toString()); 
+        persona.setIdCiudad(Integer.parseInt(etiqidciudad.getText()));  
+        persona.setIdpersona(Integer.parseInt(etiqidpersona.getText())); 
+        persona.setNumeroDocumento(etiqnrodocumento.getText()); 
+        persona.setTipoDocumento((String) cbtipodocumento.getSelectedItem()); 
+        persona.setCelular(etiqcelular.getText()); 
 
-    String resultado = serviciopersona.modificarPersona(persona);
-    JOptionPane.showMessageDialog(this, resultado);
+        String resultado = serviciopersona.modificarPersona(persona);
+        JOptionPane.showMessageDialog(this, resultado);
 
     LimpiarCampos();
     }
-    private void consultarPersonaPorId(String id) {
-       cargardatos(serviciopersona.consultarPersonaPorId(Integer.parseInt(id)));
-       
-    }
-    
-    public void cargardatos(PersonaModel modelo){
-        etiqidciudad.setText(String.valueOf(modelo.idciudad));
-        etiqnombre.setText(modelo.nombre);
-        etiqapellido.setText(modelo.apellido);
-        cbtipodocumento.setSelectedItem(modelo.tipodocumento);
-        etiqnrodocumento.setText(modelo.numerodocumento);
-        etiqdireccion.setText(modelo.direccion);
-        etiqemail.setText(modelo.email);
-        etiqcelular.setText(modelo.celular);
-        cbestado.setSelectedItem(modelo.estado);
-    }
-    
+ 
     private void LimpiarCampos() {
         etiqidpersona.setText("");
         etiqidciudad.setText("");
@@ -98,7 +85,6 @@ public class Personas extends javax.swing.JFrame {
         etiqemail.setText("");
         cbestado.setSelectedIndex(0);
     }
-    
     
 
     @SuppressWarnings("unchecked")
@@ -365,26 +351,19 @@ public class Personas extends javax.swing.JFrame {
     if (!idPersonaEliminar.isEmpty()) {
         try {
             int idPersona = Integer.parseInt(idPersonaEliminar);
-
             int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar esta persona?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-
             if (confirmacion == JOptionPane.YES_OPTION) {
-
                 String mensajeEliminar = serviciopersona.eliminarPersona(idPersona);
-
                 JOptionPane.showMessageDialog(this, mensajeEliminar);
-            }
-            
-            LimpiarCampos();
-            
+            }            
+            LimpiarCampos();           
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "El ID de la persona debe ser un número válido.");
         }
     } else {
         JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID de persona para eliminar.");
     }
-
-
+    
     }//GEN-LAST:event_btneliminarActionPerformed
 
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed

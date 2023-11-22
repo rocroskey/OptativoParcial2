@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package registros.Presentation.Auth;
 
 import registros.Presentation.Ciudad;
@@ -9,15 +6,8 @@ import registros.Presentation.Cliente;
 import registros.Presentation.Cuentas;
 import registros.Presentation.Personas;
 
-/**
- *
- * @author sosos
- */
 public class Principal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Principal
-     */
     public Principal() {
         initComponents();
         setLocationRelativeTo(null);
@@ -40,6 +30,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menupersonas = new javax.swing.JMenuItem();
@@ -64,6 +55,8 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem6.setText("jMenuItem6");
 
         jMenuItem8.setText("jMenuItem8");
+
+        jMenuItem7.setText("jMenuItem7");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -184,6 +177,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem menuciudad;
     private javax.swing.JMenuItem menuclientes;

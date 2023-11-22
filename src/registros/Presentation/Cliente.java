@@ -1,80 +1,61 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package registros.Presentation;
 
 import java.util.Date;
 import javax.swing.JOptionPane;
-import registros.Infraestructura.Models.ClienteModel;
+import registros.Infraestructura.Models.ClienteModelo;
 import registros.Services.ServicioClientes;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
 
 
-
-/**
- *
- * @author sosos
- */
 public class Cliente extends javax.swing.JFrame {
 
     private ServicioClientes serviciocliente;
-    private ClienteModel clientemodel;
-    
    
     public Cliente() {
         initComponents();
         setLocationRelativeTo(null);
 
-        serviciocliente =new ServicioClientes("postgres", "091100", "localhost", "5432", "Registros");
-        
+        serviciocliente =new ServicioClientes("postgres", "091100", "localhost", "5432", "Registros");  
     }
     
+    public void cargardatos(ClienteModelo modelo){
+        etiqidcliente.setText(String.valueOf(modelo.getIdcliente()));
+        etiqidpersona.setText(String.valueOf(modelo.getIdPersona()));
+        cbestado.setSelectedItem(modelo.getEstado());
+        DateIngreso.setDate(modelo.getFecha_ingreso());   
+    }
         
     private void consultarClientePorId(String id) {
-       cargardatos(serviciocliente.consultarClientePorId(Integer.parseInt(id)));
+        cargardatos(serviciocliente.consultarClientePorId(Integer.parseInt(id)));
        
     }
     
-    
     private void guardarCliente() {
-    Date fechaSeleccionada = DateIngreso.getDate();
-    ClienteModel cliente = new ClienteModel();
-    cliente.setIdcliente(Integer.parseInt(etiqidcliente.getText()));
-    cliente.setIdPersona(Integer.parseInt(etiqidpersona.getText()));  
-    cliente.setEstado(cbestado.getSelectedItem().toString());  
-    cliente.setFecha_ingreso(fechaSeleccionada);
+        Date fechaSeleccionada = DateIngreso.getDate();
+        ClienteModelo cliente = new ClienteModelo();
+        cliente.setIdcliente(Integer.parseInt(etiqidcliente.getText()));
+        cliente.setIdPersona(Integer.parseInt(etiqidpersona.getText()));  
+        cliente.setEstado(cbestado.getSelectedItem().toString());  
+        cliente.setFecha_ingreso(fechaSeleccionada);
 
-    String resultado = serviciocliente.registrarCliente(cliente);
-    JOptionPane.showMessageDialog(this, resultado);
+        String resultado = serviciocliente.registrarCliente(cliente);
+        JOptionPane.showMessageDialog(this, resultado);
 
     LimpiarCampos();
-
 }
     
     private void actualizarCliente(){
-    Date fechaSeleccionada = DateIngreso.getDate();
-    ClienteModel cliente = new ClienteModel();
-    cliente.setIdcliente(Integer.parseInt(etiqidcliente.getText()));
-    cliente.setIdPersona(Integer.parseInt(etiqidpersona.getText()));  
-    cliente.setEstado(cbestado.getSelectedItem().toString()); 
-    cliente.setFecha_ingreso(fechaSeleccionada);
+        Date fechaSeleccionada = DateIngreso.getDate();
+        ClienteModelo cliente = new ClienteModelo();
+        cliente.setIdcliente(Integer.parseInt(etiqidcliente.getText()));
+        cliente.setIdPersona(Integer.parseInt(etiqidpersona.getText()));  
+        cliente.setEstado(cbestado.getSelectedItem().toString()); 
+        cliente.setFecha_ingreso(fechaSeleccionada);
   
-
-
-    String resultado = serviciocliente.modificarCliente(cliente);
-    JOptionPane.showMessageDialog(this, resultado);
+        String resultado = serviciocliente.modificarCliente(cliente);
+        JOptionPane.showMessageDialog(this, resultado);
 
     LimpiarCampos();
-    }
-    
-    public void cargardatos(ClienteModel modelo){
-        etiqidcliente.setText(String.valueOf(modelo.idcliente));
-        etiqidpersona.setText(String.valueOf(modelo.idpersona));
-        cbestado.setSelectedItem(modelo.estado);
-        DateIngreso.setDate(modelo.fechaingreso);
-        
     }
     
     private void LimpiarCampos() {
@@ -82,8 +63,7 @@ public class Cliente extends javax.swing.JFrame {
         etiqidpersona.setText("");
         DateIngreso.setDate(null);
         cbestado.setSelectedIndex(0);
-    }
-    
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -256,31 +236,24 @@ public class Cliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
-        // TODO add your handling code here:
         if(JOptionPane.showConfirmDialog(null,"Deseas salir del formulario?")== JOptionPane.YES_OPTION){
             System.exit(0);
         }
     }//GEN-LAST:event_btnsalirActionPerformed
 
     private void btneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarActionPerformed
-        // TODO add your handling code here:
-        String idEliminar = etiqidcliente.getText().trim();
+       String idEliminar = etiqidcliente.getText().trim();
 
     if (!idEliminar.isEmpty()) {
         try {
             int id = Integer.parseInt(idEliminar);
-
             int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar este cliente?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-
             if (confirmacion == JOptionPane.YES_OPTION) {
-
                 String mensajeEliminar = serviciocliente.eliminarCliente(id);
-
                 JOptionPane.showMessageDialog(this, mensajeEliminar);
             }
             
-            LimpiarCampos();
-            
+            LimpiarCampos();      
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "El ID del cliente debe ser válido.");
         }
@@ -292,12 +265,10 @@ public class Cliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btneliminarActionPerformed
 
     private void btnguadarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguadarActionPerformed
-        // TODO add your handling code here:
         guardarCliente();
     }//GEN-LAST:event_btnguadarActionPerformed
 
     private void etiqidclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_etiqidclienteKeyPressed
-        // TODO add your handling code here:
         if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
             consultarClientePorId(etiqidcliente.getText().trim());
         }
@@ -305,17 +276,14 @@ public class Cliente extends javax.swing.JFrame {
     }//GEN-LAST:event_etiqidclienteKeyPressed
 
     private void btnaactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaactualizarActionPerformed
-        // TODO add your handling code here:
         actualizarCliente();
     }//GEN-LAST:event_btnaactualizarActionPerformed
 
     private void btnconsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnconsultarActionPerformed
-        // TODO add your handling code here:
         consultarClientePorId(etiqidcliente.getText().trim());
     }//GEN-LAST:event_btnconsultarActionPerformed
     
     public static void main(String args[]) {
-
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Cliente().setVisible(true);

@@ -1,14 +1,27 @@
 
 package registros.Infraestructura.Models;
 
+/**
+ * Representacion de una ciudad con sus atributos
+ */
 
-public class CiudadModel {
+public class CiudadModelo {
+    private int Id;
+    private String ciudad;
+    private String Departamento;
+    private int PostalCode;
 
-    public int Id;
-    public String ciudad;
-    public String Departamento;
-    public int PostalCode;
     
+public CiudadModelo(int Id, String ciudad, String Departamento, int PostalCode) {
+    this.Id = Id;
+    this.ciudad = ciudad;
+    this.Departamento = Departamento;
+    this.PostalCode = PostalCode;        
+    }
+
+    public CiudadModelo() {
+        
+    }
 
     public String getCiudad() {
         return ciudad;

@@ -3,14 +3,30 @@ package registros.Infraestructura.Models;
 
 import java.util.Date;
 
-public class ClienteModel {
-    public int idcliente;
-    public int idpersona;
-    public Date fechaingreso;
-    public String calificacion;
-    public String estado;
+/**
+ * Representacion de un cliente con sus atributos
+ */
 
+public class ClienteModelo {
+    private int idcliente;
+    private int idpersona;
+    private Date fechaingreso;
+    private String calificacion;
+    private String estado;
 
+    
+public ClienteModelo(int idcliente, int idpersona, Date fechaingreso, String calificacion, String estado) {
+    this.idpersona = idpersona;
+    this.idcliente = idcliente;
+    this.fechaingreso = fechaingreso;
+    this.calificacion = calificacion;
+    this.estado = estado;    
+    }     
+
+    public ClienteModelo() {
+        
+    }
+        
     public int getIdcliente() {
         return idcliente;
     }
@@ -51,6 +67,5 @@ public class ClienteModel {
     public void setEstado(String Estado) {
         this.estado = Estado;
     }
-
-    
+  
 }

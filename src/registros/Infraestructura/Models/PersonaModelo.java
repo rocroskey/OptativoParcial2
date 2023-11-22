@@ -1,20 +1,41 @@
 
 package registros.Infraestructura.Models;
 
+/**
+ * Representacion de una persona con sus atributos
+ */
 
-public class PersonaModel {
+public class PersonaModelo {
 
-    public int idpersona;
-    public int idciudad;
-    public String nombre;
-    public String apellido;
-    public String tipodocumento;
-    public String numerodocumento;
-    public String direccion;
-    public String celular;
-    public String email;
-    public String estado;
+    private int idpersona;
+    private int idciudad;
+    private String nombre;
+    private String apellido;
+    private String tipodocumento;
+    private String numerodocumento;
+    private String direccion;
+    private String celular;
+    private String email;
+    private String estado;  
+    
+    
+ public PersonaModelo(int idpersona, String nombre, String apellido, String tipodocumento, String numerodocumento, String direccion, String celular, String email, String estado) {
+        this.idpersona = idpersona;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.tipodocumento = tipodocumento;
+        this.numerodocumento = numerodocumento;
+        this.direccion = direccion;
+        this.celular = celular;
+        this.email = email;
+        this.estado = estado;
+ }
 
+ 
+    public PersonaModelo(){
+        
+    }
+ 
     public int getIdpersona() {
         return idpersona;
     }

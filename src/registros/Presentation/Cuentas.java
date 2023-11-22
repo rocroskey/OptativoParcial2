@@ -1,130 +1,99 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package registros.Presentation;
 
-
 import java.util.Date;
-import registros.Infraestructura.Models.CuentasModel;
+import registros.Infraestructura.Models.CuentasModelo;
 import registros.Services.ServicioCuentas;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import registros.Infraestructura.Models.PersonaModel;
 
 
-/**
- *
- * @author sosos
- */
 public class Cuentas extends javax.swing.JFrame {
-
-    
         private ServicioCuentas serviciocuenta;
-        private CuentasModel cuentamodel;
         
-        
-    /**
-     * Creates new form Cuentas
-     */
     public Cuentas() {
         initComponents();
         setLocationRelativeTo(null);
-        
-        
-serviciocuenta = new ServicioCuentas("postgres", "091100","localhost","5432","Registros");    }
+  
+        serviciocuenta = new ServicioCuentas("postgres", "091100","localhost","5432","Registros");    
+    }
 
+    public void cargardatos(CuentasModelo modelo){
+        etiqidcuenta.setText(String.valueOf(modelo.getIdcuenta()));
+        etiqidcliente.setText(String.valueOf(modelo.getIdCliente()));
+        etiqnrocuenta.setText(String.valueOf(modelo.getNroCuenta()));
+        etiqtipocuenta.setText(modelo.getTipoCuenta());
+        etiqsaldo.setText(String.valueOf(modelo.getSaldo()));
+        etiqmoneda.setText(modelo.getMoneda());
+        etiqpromedio.setText(modelo.getPromedioAcreditacion());
+        cbestado.setSelectedItem(modelo.getEstado());
+        Datefechaalta.setDate(modelo.getFechaAlta());
+        etiqcostom.setText(String.valueOf(modelo.getCostoMantenimiento()));
+        etiqnrocontrato.setText(modelo.getNroContrato());
+    }
+    
     private void ConsultarCuenta(String id) {
-       cargardatos(serviciocuenta.consultarCuentaPorId(Integer.parseInt(id)));
-       
+       cargardatos(serviciocuenta.consultarCuentaPorId(Integer.parseInt(id)));  
     }
-    
-    
-    public void cargardatos(CuentasModel modelo){
 
-        etiqidcuenta.setText(String.valueOf(modelo.idcuenta));
-        etiqidcliente.setText(String.valueOf(modelo.idclientes));
-        etiqnrocuenta.setText(String.valueOf(modelo.nrocuenta));
-        etiqtipocuenta.setText(modelo.tipocuenta);
-        etiqsaldo.setText(String.valueOf(modelo.saldo));
-        etiqmoneda.setText(modelo.moneda);
-        etiqpromedio.setText(modelo.promedioacreditacion);
-        cbestado.setSelectedItem(modelo.estado);
-        Datefechaalta.setDate(modelo.fechaalta);
-        etiqcostom.setText(String.valueOf(modelo.costomantenimiento));
-        etiqnrocontrato.setText(modelo.nrocontrato);
-        
-        
-    
-    }
-    
-        private void guardarCuenta() {
+    private void guardarCuenta() {
+  
         Date fechaSeleccionada = Datefechaalta.getDate(); 
-        CuentasModel cuenta = new CuentasModel();
+        CuentasModelo cuenta = new CuentasModelo();
         cuenta.setFechaAlta(fechaSeleccionada);
         cuenta.setIdCliente(Integer.parseInt(etiqidcliente.getText()));
         cuenta.setIdcuenta(Integer.parseInt(etiqidcuenta.getText()));
         cuenta.setSaldo(Float.parseFloat(etiqsaldo.getText()));
         cuenta.setCostoMantenimiento(Float.parseFloat(etiqcostom.getText()));
+        cuenta.setEstado(cbestado.getSelectedItem().toString()); 
+        cuenta.setMoneda(etiqmoneda.getText());
+        cuenta.setNroCuenta(etiqnrocuenta.getText());
+        cuenta.setNroContrato(etiqnrocontrato.getText());
+        cuenta.setPromedioAcreditacion(etiqpromedio.getText());
+        cuenta.setTipoCuenta(etiqtipocuenta.getText());
 
-    cuenta.setEstado(cbestado.getSelectedItem().toString()); 
-    cuenta.setMoneda(etiqmoneda.getText());
-    cuenta.setNroCuenta(etiqnrocuenta.getText());
-    cuenta.setNroContrato(etiqnrocontrato.getText());
-    cuenta.setPromedioAcreditacion(etiqpromedio.getText());
-    cuenta.setTipoCuenta(etiqtipocuenta.getText());
-
-    String resultado = serviciocuenta.registrarCuenta(cuenta);
-    JOptionPane.showMessageDialog(this, resultado);
+        String resultado = serviciocuenta.registrarCuenta(cuenta);
+        JOptionPane.showMessageDialog(this, resultado);
+   
 
     LimpiarCampos();                                             
 }
         
         
-        private void actualizarCuenta(){
+    private void actualizarCuenta(){
         Date fechaSeleccionada = Datefechaalta.getDate(); 
-        CuentasModel cuenta = new CuentasModel();
+        CuentasModelo cuenta = new CuentasModelo();
         cuenta.setFechaAlta(fechaSeleccionada);
+        cuenta.setEstado(cbestado.getSelectedItem().toString());  
+        cuenta.setMoneda(etiqmoneda.getText());
+        cuenta.setNroCuenta(etiqnrocuenta.getText());
+        cuenta.setNroContrato(etiqnrocontrato.getText());
+        cuenta.setPromedioAcreditacion(etiqpromedio.getText());
+        cuenta.setTipoCuenta(etiqtipocuenta.getText());
 
-    try {
+        String resultado = serviciocuenta.modificarCuenta(cuenta);
+        JOptionPane.showMessageDialog(this, resultado);
+    
+ 
         cuenta.setIdCliente(Integer.parseInt(etiqidcliente.getText()));
         cuenta.setIdcuenta(Integer.parseInt(etiqidcuenta.getText()));
         cuenta.setSaldo(Float.valueOf(etiqsaldo.getText()));
-        cuenta.setCostoMantenimiento(Integer.parseInt(etiqcostom.getText()));
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos para ID de Cliente, ID de Cuenta y Saldo.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;  
-    }
-
-    cuenta.setEstado(cbestado.getSelectedItem().toString());  
-    cuenta.setMoneda(etiqmoneda.getText());
-    cuenta.setNroCuenta(etiqnrocuenta.getText());
-    cuenta.setNroContrato(etiqnrocontrato.getText());
-    cuenta.setPromedioAcreditacion(etiqpromedio.getText());
-    cuenta.setTipoCuenta(etiqtipocuenta.getText());
+        cuenta.setCostoMantenimiento((float) Double.parseDouble(etiqcostom.getText()));
     
-
-    String resultado = serviciocuenta.modificarCuenta(cuenta);
-    JOptionPane.showMessageDialog(this, resultado);
-
     LimpiarCampos();                                             
-}
-            
+    }   
 
-    
     private void LimpiarCampos() {
-    etiqidcuenta.setText("");
-    etiqnrocuenta.setText("");
-    cbestado.setSelectedIndex(0);
-    etiqnrocontrato.setText("");
-    etiqcostom.setText("");
-    etiqmoneda.setText("");
-    etiqpromedio.setText("");
-    etiqsaldo.setText("");
-    etiqtipocuenta.setText("");
-    etiqidcliente.setText("");
-    Datefechaalta.setDate(null);
+        etiqidcuenta.setText("");
+        etiqnrocuenta.setText("");
+        cbestado.setSelectedIndex(0);
+        etiqnrocontrato.setText("");
+        etiqcostom.setText("");
+        etiqmoneda.setText("");
+        etiqpromedio.setText("");
+        etiqsaldo.setText("");
+        etiqtipocuenta.setText("");
+        etiqidcliente.setText("");
+        Datefechaalta.setDate(null);
     }
     
     @SuppressWarnings("unchecked")
@@ -384,18 +353,12 @@ serviciocuenta = new ServicioCuentas("postgres", "091100","localhost","5432","Re
     if (!idCuentaEliminar.isEmpty()) {
         try {
             int idCuenta = Integer.parseInt(idCuentaEliminar);
-
             int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar esta cuenta?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-
             if (confirmacion == JOptionPane.YES_OPTION) {
-
                 String mensajeEliminar = serviciocuenta.eliminarCCuenta(idCuenta);
-
                 JOptionPane.showMessageDialog(this, mensajeEliminar);
-            }
-            
-            LimpiarCampos();
-            
+            }           
+            LimpiarCampos();         
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "El ID de la cuenta debe ser un número válido.");
         }

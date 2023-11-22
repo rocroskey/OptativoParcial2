@@ -3,7 +3,8 @@ package registros.Infraestructura.DbManagment;
 
 import java.sql.SQLException;
 import registros.Infraestructura.Conection.Conexiones;
-import registros.Infraestructura.Models.MovimientosModel;
+import registros.Infraestructura.Models.MovimientosModelo;
+
 
 public class Movimientos {
      
@@ -13,7 +14,7 @@ public class Movimientos {
         conexion = new Conexiones(userBD, passDB, hostDB, portDB, dataBase);
     }
 
-    public String registrarMovimiento(MovimientosModel movimiento){
+    public String registrarMovimiento(MovimientosModelo movimiento){
 
         try {
             conexion.setQuerySQL(conexion.conexionDB().createStatement());
@@ -27,50 +28,49 @@ public class Movimientos {
                     "cuentadestino, " +
                     "canal) " +
                     "values('" +
-                    movimiento.FechaMovimiento + "', '" +
-                    movimiento.TipoMovimiento + "', '" +
-                    movimiento.SaldoAnterior + "', '" +
-                    movimiento.SaldoActual + "', '" +
-                    movimiento.MontoMovimiento + "', '" +
-                    movimiento.CuentaOrigen + "', '" +
-                    movimiento.CuentaDestino + "', '" +
-                    movimiento.Canal + "')");
+                    movimiento.getFechaMovimiento() + "', '" +
+                    movimiento.getTipoMovimiento() + "', '" +
+                    movimiento.getSaldoAnterior() + "', '" +
+                    movimiento.getSaldoActual() + "', '" +
+                    movimiento.getMontoMovimiento() + "', '" +
+                    movimiento.getCuentaOrigen() + "', '" +
+                    movimiento.getCuentaDestino() + "', '" +
+                    movimiento.getCanal() + "')");
             conexion.conexionDB().close();
-            return "El movimineto de la cuenta " + movimiento.IdCuenta + " fue registrado correctamente.";
+            return "El movimineto de la cuenta " + movimiento.getIdCuenta() + " fue registrado correctamente.";
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public String modificarMovimiento(MovimientosModel movimiento){
+    public String modificarMovimiento(MovimientosModelo movimiento){
 
         try {
             conexion.setQuerySQL(conexion.conexionDB().createStatement());
             boolean execute = conexion.getQuerySQL().execute("UPDATE movimientos SET " +
           
-                    "fechamovimiento = '" + movimiento.FechaMovimiento + "'," +
-                    "tipomovimiento = '" + movimiento.TipoMovimiento + "'," +
-                    "saldoanterior = '" + movimiento.SaldoAnterior + "'," +
-                    "saldoactual = '" + movimiento.SaldoActual + "'," +
-                    "montomovimiento = '" + movimiento.MontoMovimiento + "'," +
-                    "cuentaorigen = '" + movimiento.CuentaOrigen + "'," +
-                    "cuentadestino = '" + movimiento.CuentaDestino + "'," +
-                    "canal = '" + movimiento.Canal + "'," +       
-                            "' Where idmovimiento = " + movimiento.idmovimiento);
+                    "fechamovimiento = '" + movimiento.getFechaMovimiento() + "'," +
+                    "tipomovimiento = '" + movimiento.getTipoMovimiento() + "'," +
+                    "saldoanterior = '" + movimiento.getSaldoAnterior() + "'," +
+                    "saldoactual = '" + movimiento.getSaldoActual() + "'," +
+                    "montomovimiento = '" + movimiento.getMontoMovimiento() + "'," +
+                    "cuentaorigen = '" + movimiento.getCuentaOrigen() + "'," +
+                    "cuentadestino = '" + movimiento.getCuentaDestino()+ "'," +
+                    "canal = '" + movimiento.getCanal() + "'," +       
+                            "' Where idmovimiento = " + movimiento.getIdmovimiento());
             conexion.conexionDB().close();
-            return "Los datos de movimientode la cuenta  " + movimiento.idmovimiento + " fueron modificados correctamente.";
+            return "Los datos de movimientode la cuenta  " + movimiento.getIdmovimiento() + " fueron modificados correctamente.";
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public MovimientosModel consultarMovimiento(int id){
-        MovimientosModel movimiento = new MovimientosModel();
+    public MovimientosModelo consultarMovimiento(int id){
+        MovimientosModelo movimiento = new MovimientosModelo();
         try {
             conexion.setQuerySQL(conexion.conexionDB().createStatement());
             conexion.setResultadoQuery(conexion.getQuerySQL().executeQuery("Select * from movimientos where idmovimiento = " +  id));
             if(conexion.getResultadoQuery().next()){
-            
                 movimiento.setIdmovimiento(conexion.getResultadoQuery().getInt("idmovimiento"));
                 movimiento.setFechaMovimiento(conexion.getResultadoQuery().getDate("FechaMovimiento"));
                 movimiento.setTipoMovimiento(conexion.getResultadoQuery().getString("TipoMovimiento"));
@@ -80,7 +80,6 @@ public class Movimientos {
                 movimiento.setCuentaOrigen(conexion.getResultadoQuery().getFloat("CuentaOrigen"));
                 movimiento.setCuentaDestino(conexion.getResultadoQuery().getFloat("CuentaDestino"));
                 movimiento.setCanal(conexion.getResultadoQuery().getFloat("Canal"));
-                
                 return movimiento;
             }
         } catch (SQLException e) {

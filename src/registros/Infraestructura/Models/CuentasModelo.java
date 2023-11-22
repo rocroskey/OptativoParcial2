@@ -3,20 +3,41 @@ package registros.Infraestructura.Models;
 
 import java.util.Date;
 
-public class CuentasModel {
+/**
+ * Representacion de una cuenta con sus elementos
+ */
 
-    public int idcuenta;
-    public int idclientes;
-    public String nrocuenta;
-    public Date fechaalta;
-    public String tipocuenta;
-    public String estado;
-    public float saldo;
-    public String nrocontrato;
-    public float costomantenimiento;
-    public String promedioacreditacion;
-    public String moneda;
+public class CuentasModelo{
+    private int idcuenta;
+    private int idclientes;
+    private String nrocuenta;
+    private Date fechaalta;
+    private String tipocuenta;
+    private String estado;
+    private float saldo;
+    private String nrocontrato;
+    private float costomantenimiento;
+    private String promedioacreditacion;
+    private String moneda;
 
+    
+public CuentasModelo(int idcuenta, int idclientes, String nrocuenta, Date fechaalta, String tipocuenta, String estado, Float saldo, String nrocontrato, Float costomantenimiento, String promedioacreditacion, String moneda) {
+    this.idcuenta = idcuenta;
+    this.idclientes = idclientes;
+    this.nrocuenta = nrocuenta;
+    this.fechaalta = fechaalta;
+    this.tipocuenta = tipocuenta;
+    this.estado = estado;
+    this.nrocontrato = nrocontrato;
+    this.costomantenimiento = costomantenimiento;
+    this.promedioacreditacion = promedioacreditacion;
+    this.moneda = moneda;       
+    }        
+
+    public CuentasModelo() {
+        
+    }
+        
     public int getIdcuenta() {
         return idcuenta;
     }
@@ -105,6 +126,5 @@ public class CuentasModel {
     public void setMoneda(String Moneda) {
         this.moneda = Moneda;
     }
-    
-    
+ 
 }

@@ -1,26 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package registros.Presentation;
 
 import javax.swing.JOptionPane;
-import registros.Infraestructura.Models.CiudadModel;
+import registros.Infraestructura.Models.CiudadModelo;
 import registros.Services.ServicioCiudades;
 
-/**
- *
- * @author sosos
- */
+
 public class Ciudad extends javax.swing.JFrame {
     
     
     private ServicioCiudades serviciociudad;
-    private CiudadModel ciudadmodel;
 
-    /**
-     * Creates new form Ciudad
-     */
     public Ciudad() {
         initComponents();
         setLocationRelativeTo(null);
@@ -28,34 +18,24 @@ public class Ciudad extends javax.swing.JFrame {
         serviciociudad = new ServicioCiudades("postgres", "091100","localhost","5432","Registros");
     }
     
+    public void cargardatos (CiudadModelo modelo){
+        etiqnomciudad.setText(modelo.getCiudad());
+        cbdepartamento.setSelectedItem(modelo.getDepartamento());
+        etiqpostal.setText(String.valueOf(modelo.getPostalCode()));  
+    }    
+    
     private void ConsultarCiudad(String id) {
        cargardatos(serviciociudad.consultarCiudad(Integer.parseInt(id)));
     }
-
-    
-    public void cargardatos (CiudadModel modelo){
-        etiqnomciudad.setText(modelo.ciudad);
-        cbdepartamento.setSelectedItem(modelo.Departamento);
-        etiqpostal.setText(String.valueOf(modelo.PostalCode));  
-    }
-    
-    
-    private void limpiarCampos() {
-    etiqidciudad.setText("");
-    etiqnomciudad.setText("");
-    etiqpostal.setText("");
-    cbdepartamento.setSelectedIndex(0);
-    }
     
     private void guardarCiudad() {
-    CiudadModel ciudad = new CiudadModel();
-    ciudad.setCiudad(etiqnomciudad.getText());
-    ciudad.setDepartamento(cbdepartamento.getSelectedItem().toString());
-    ciudad.setPostalCode(Integer.parseInt(etiqpostal.getText()));
-    
+        CiudadModelo ciudad = new CiudadModelo();
+        ciudad.setCiudad(etiqnomciudad.getText());
+        ciudad.setDepartamento(cbdepartamento.getSelectedItem().toString());
+        ciudad.setPostalCode(Integer.parseInt(etiqpostal.getText()));
 
-    String resultado = serviciociudad.registrarCiudad(ciudad);
-    JOptionPane.showMessageDialog(this, resultado);
+        String resultado = serviciociudad.registrarCiudad(ciudad);
+        JOptionPane.showMessageDialog(this, resultado);
 
     limpiarCampos();
 }
@@ -63,21 +43,24 @@ public class Ciudad extends javax.swing.JFrame {
     private void actualizarCiudad() {
   
     int idCiudad = Integer.parseInt(etiqidciudad.getText().trim());
-    CiudadModel ciudad = new CiudadModel();
-    ciudad.setCiudad(etiqnomciudad.getText());
-    ciudad.setDepartamento(cbdepartamento.getSelectedItem().toString());
-    ciudad.setPostalCode(Integer.parseInt(etiqpostal.getText()));
+        CiudadModelo ciudad = new CiudadModelo();
+        ciudad.setCiudad(etiqnomciudad.getText());
+        ciudad.setDepartamento(cbdepartamento.getSelectedItem().toString());
+        ciudad.setPostalCode(Integer.parseInt(etiqpostal.getText()));
 
-
-    String resultado = serviciociudad.modificarCiudad(ciudad, idCiudad);
-    JOptionPane.showMessageDialog(this, resultado);
-
+        String resultado = serviciociudad.modificarCiudad(ciudad, idCiudad);
+        JOptionPane.showMessageDialog(this, resultado);
 
     limpiarCampos();
 }
-
     
-
+    private void limpiarCampos() {
+        etiqidciudad.setText("");
+        etiqnomciudad.setText("");
+        etiqpostal.setText("");
+        cbdepartamento.setSelectedIndex(0);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -268,6 +251,7 @@ public class Ciudad extends javax.swing.JFrame {
             ConsultarCiudad(etiqidciudad.getText().trim());
     }//GEN-LAST:event_etiqidciudadKeyPressed
 }
+    
     private void cbdepartamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbdepartamentoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbdepartamentoActionPerformed
@@ -303,8 +287,7 @@ public class Ciudad extends javax.swing.JFrame {
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         // TODO add your handling code here:
-        ConsultarCiudad(etiqidciudad.getText().trim());
-        
+        ConsultarCiudad(etiqidciudad.getText().trim());     
     }//GEN-LAST:event_btnConsultarActionPerformed
 
 

@@ -3,18 +3,39 @@ package registros.Infraestructura.Models;
 
 import java.util.Date;
 
-public class MovimientosModel {
-    public int idmovimiento;
-    public int IdCuenta;
-    public Date FechaMovimiento;
-    public String TipoMovimiento;
-    public float SaldoAnterior;
-    public float SaldoActual;
-    public float MontoMovimiento;
-    public float CuentaOrigen;
-    public float CuentaDestino;
-    public float Canal;
+/**
+ * Representacion de los moviemientos realizados en las cuentas
+ */
 
+public class MovimientosModelo {
+    private int idmovimiento;
+    private int IdCuenta;
+    private Date FechaMovimiento;
+    private String TipoMovimiento;
+    private float SaldoAnterior;
+    private float SaldoActual;
+    private float MontoMovimiento;
+    private float CuentaOrigen;
+    private float CuentaDestino;
+    private float Canal;
+
+    
+public MovimientosModelo(int idmovimiento, int IdCuenta, Date FechaMovimiento, String TipoMovimiento, float SaldoAnterior, float SaldoActual, float MontoMovimiento, float CuentaOrigen, float CuentaDestino, float Canal ) {
+    this.idmovimiento = idmovimiento;
+    this.IdCuenta = IdCuenta;
+    this.FechaMovimiento = FechaMovimiento;
+    this.TipoMovimiento = TipoMovimiento;
+    this.SaldoAnterior = SaldoAnterior;
+    this.MontoMovimiento = MontoMovimiento;
+    this.CuentaOrigen = CuentaOrigen;
+    this.CuentaDestino = CuentaDestino;
+    this.Canal = Canal;
+    }       
+
+    public MovimientosModelo() {
+        
+    }
+        
     public int getIdmovimiento() {
         return idmovimiento;
     }
@@ -94,7 +115,5 @@ public class MovimientosModel {
     public void setCanal(float Canal) {
         this.Canal = Canal;
     }
-    
-    
-    
+  
 }
